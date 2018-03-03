@@ -1,0 +1,35 @@
+#! /usr/bin/env node
+const yargs = require('yargs');
+const init = require('../src/index.js');
+const argv = yargs.option('d', {
+    alias: 'root',
+    demand: 'false',
+    type: 'string',
+    default: process.cwd(),
+    description: '静态文件根目录'
+}).option('o', {
+    alias: 'host',
+    demand: 'false',
+    default: 'localhost',
+    type: 'string',
+    description: '配置监听的主机'
+}).option('p', {
+    alias: 'port',
+    demand: 'false',
+    type: 'number',
+    default: 8080,
+    description: '配置端口号'
+}).option('c', {
+    alias: 'child',
+    demand: 'false',
+    type: 'boolean',
+    default: false,
+    description: '是否子进程运行'
+})
+.usage('hope-server [options]')
+.example(
+'hope-server -d / -p 9090 -o localhost', '在本机的9090端口上监听客户端的请求'
+).help('h').argv;
+
+// 启动服务
+init(argv);
